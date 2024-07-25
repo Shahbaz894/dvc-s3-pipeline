@@ -1,5 +1,5 @@
 outs:
-- md5: 9d83b2f0ec2486924be9799bbb3945e8
-  size: 44144
+- md5: 31ac095ec6fe12123b5a31245ef8e23f
+  size: 30130
   hash: md5
   path: titanic_pca.csv

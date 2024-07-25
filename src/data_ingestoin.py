@@ -25,11 +25,11 @@ scaler = StandardScaler()
 X_scaled = scaler.fit_transform(X)
 
 # Apply PCA
-pca = PCA(n_components=3)
+pca = PCA(n_components=2)
 X_pca = pca.fit_transform(X_scaled)
 
 # Create a DataFrame with PCA results
-df_pca = pd.DataFrame(data=X_pca, columns=['PC1', 'PC2', 'PC3'])
+df_pca = pd.DataFrame(data=X_pca, columns=['PC1', 'PC2', ])
 df_pca['Survived'] = y.values
 
 # Ensure the directory exists

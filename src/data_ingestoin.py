@@ -1,39 +1,16 @@
 import pandas as pd
-from sklearn.preprocessing import StandardScaler
-from sklearn.decomposition import PCA
+import numpy as np
+
+from sklearn.model_selection import train_test_split
 import os
 
-# Load the dataset
-df = pd.read_csv('./data/raw/titanic.csv')
+#url to download datset
+url = 'https://raw.githubusercontent.com/campusx-official/toy-datasets/main/student_performance.csv'
 
-# Drop unnecessary columns
-df.drop(['Name', 'Ticket', 'Cabin', 'PassengerId'], axis=1, inplace=True)
+#read the dataset
+df = pd.read_csv(url)
 
-# Drop rows with missing values
-df.dropna(inplace=True)
+train,test=train_test_split(df,test_size=0.2,random_state=42)
 
-# Encode categorical columns
-df['Sex'] = df['Sex'].map({'male': 1, 'female': 0})
-df['Embarked'] = df['Embarked'].map({'C': 0, 'Q': 1, 'S': 2})
-
-# Separate features and target variable
-X = df.drop(columns=['Survived'])
-y = df['Survived']
-
-# Scale the features
-scaler = StandardScaler()
-X_scaled = scaler.fit_transform(X)
-
-# Apply PCA
-pca = PCA(n_components=2)
-X_pca = pca.fit_transform(X_scaled)
-
-# Create a DataFrame with PCA results
-df_pca = pd.DataFrame(data=X_pca, columns=['PC1', 'PC2', ])
-df_pca['Survived'] = y.values
-
-# Ensure the directory exists
-os.makedirs(os.path.join('data', 'processed'), exist_ok=True)
-
-# Save the PCA results to a CSV file
-df_pca.to_csv(os.path.join('data', 'processed', 'titanic_pca.csv'), index=False)
+train.to_csv("./data/raw/train.csv", index=False)
+test.to_csv("./data/raw/test.csv", index=False)
